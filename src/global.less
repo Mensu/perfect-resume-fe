@@ -1,0 +1,90 @@
+@import "../node_modules/muse-ui/src/styles/themes/variables/light.less";
+
+.mu-tabs.flat-tabs {
+  background-color: transparent;
+  .mu-tab-link {
+    color: fadeout(black, 46%);
+  }
+  .mu-tab-active {
+    color: @primaryColor;
+  }
+  .mu-tab-link-highlight {
+    background-color: @primaryColor;
+  }
+}
+
+.max-w-400 {
+  max-width: 400px;
+}
+
+// 原子类
+.loop(@mapper; @index: 0; @max: 50; @step: 1) when (@index <= @max) {
+  @mapper();
+  .loop(@mapper; @index + @step; @max; @step);
+}
+
+@atomMarginPadding: {
+  .m-@{index} {
+    margin: unit(@index, px);
+  }
+  .mt-@{index} {
+    margin-top: unit(@index, px);
+  }
+  .mr-@{index} {
+    margin-right: unit(@index, px);
+  }
+  .mb-@{index} {
+    margin-bottom: unit(@index, px);
+  }
+  .ml-@{index} {
+    margin-left: unit(@index, px);
+  }
+  .p-@{index} {
+    padding: unit(@index, px);
+  }
+  .pt-@{index} {
+    padding-top: unit(@index, px);
+  }
+  .pr-@{index} {
+    padding-right: unit(@index, px);
+  }
+  .pb-@{index} {
+    padding-bottom: unit(@index, px);
+  }
+  .pl-@{index} {
+    padding-left: unit(@index, px);
+  }
+};
+
+.loop(@atomMarginPadding, 0, 50);
+.loop(@atomMarginPadding, 50, 100, 5);
+
+.loop({
+  .fs-@{index} {
+    font-size: unit(@index, px);
+  }
+}, 10, 40);
+
+.loop({
+  .rounded-@{index} {
+    border-radius: unit(@index, px);
+  }
+}, 0, 10);
+
+.loop({
+  .w-@{index} {
+    width: unit(@index, px);
+  }
+  .h-@{index} {
+    height: unit(@index, px);
+  }
+  .lh-@{index} {
+    line-height: unit(@index, px);
+  }
+}, 0, 40);
+
+.loop({
+  .w-p@{index} {
+    width: unit(@index, %);
+  }
+}, 0, 100, 5);
