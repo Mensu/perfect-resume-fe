@@ -21,19 +21,18 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import { namespace, State, Action } from 'vuex-class';
-import { template as templatestore } from '../store/modules/template';
+import { namespace } from 'vuex-class';
+import { template as templstore } from '../store/modules/template';
 import { FETCH_TEMPLATE_LIST } from '../store/modules/template/actions';
 
-const TemplateState = namespace(templatestore.name, State);
-const TemplateAction = namespace(templatestore.name, Action);
+const TemplModule = namespace(templstore.name);
 
 @Component({
   name: 'template-list',
 })
 export default class extends Vue {
-  @TemplateState rawList;
-  @TemplateAction(FETCH_TEMPLATE_LIST) fetchList;
+  @TemplModule.State rawList;
+  @TemplModule.Action(FETCH_TEMPLATE_LIST) fetchList;
 
   created() {
     this.fetchList();

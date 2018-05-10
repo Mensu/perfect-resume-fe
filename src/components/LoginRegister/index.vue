@@ -14,7 +14,7 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import { namespace, State, Action } from 'vuex-class';
+import { State, Action } from 'vuex-class';
 import { OPEN_LOGIN_FORM, CLOSE_LOGIN_FORM } from '../../store/actions';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
