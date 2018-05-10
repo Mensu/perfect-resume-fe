@@ -24,15 +24,15 @@ import { namespace, State, Action } from 'vuex-class';
 import { OPEN_LOGIN_FORM, LOGOUT } from '../../store/actions';
 import { user as userstore } from '../../store/modules/user';
 
-const UserState = namespace(userstore.name, State);
+const UserModule = namespace(userstore.name);
 
 @Component({
   name: 'topbar-right-btn',
 })
 export default class extends Vue {
   @State isLoggedIn;
-  @UserState isAdmin;
-  @UserState nickname;
+  @UserModule.State isAdmin;
+  @UserModule.State nickname;
   @Action(OPEN_LOGIN_FORM) openLoginRegister;
   @Action(LOGOUT) logout;
 
