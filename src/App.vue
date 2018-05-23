@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <topbar class="mb-40"/>
-    <transition :name="transition" mode="out-in">
-      <router-view></router-view>
-    </transition>
+    <topbar class="topbar"/>
+    <div class="main pt-40 pb-40 h-center">
+      <transition :name="transition" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
     <login-register/>
     <mu-back-top/>
   </div>
@@ -20,9 +22,14 @@ import LoginRegister from './components/LoginRegister';
     Topbar,
     LoginRegister,
   },
+  created() {
+    // 使得 $router reactive
+    this.router = this.$router;
+  },
 })
 export default class extends Vue {
   transition = 'slide-left';
+  router = {};
 
   @Watch('$route')
   $routeChange($route, $oldRoute) {
@@ -44,10 +51,35 @@ export default class extends Vue {
 }
 </script>
 
+<style lang="less">
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+</style>
+
 
 <style lang="less" scoped>
 @duration: 0.3s;
 @translate: 500px;
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.topbar {
+  flex: 0 0 auto;
+}
+
+.main {
+  flex: 1 1 auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
 
 .slide-left-enter-active,
 .slide-left-leave-active,
