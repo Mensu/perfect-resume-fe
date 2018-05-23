@@ -1,5 +1,5 @@
 <template>
-  <div class="host">
+  <div class="topbar-right-btn">
     <template v-if="isLoggedIn">
       <mu-flat-button class="pl-16 right-menu-button right-btn" color="white"
                       ref="rightMenuButton" :label="nickname" @click="isRightMenuOpen = true">
@@ -39,7 +39,9 @@ export default class extends Vue {
   isRightMenuOpen = false;
   trigger = null;
 
-  @Inject() reloadRouterView;
+  mounted() {
+    this.isLoggedInChange(this.isLoggedIn);
+  }
 
   @Watch('isLoggedIn')
   /**
@@ -50,6 +52,8 @@ export default class extends Vue {
     this.trigger = isLoggedIn ? this.$refs.rightMenuButton.$el : null;
   }
 
+  @Inject() reloadRouterView;
+
   async doLogout() {
     await this.logout();
     await this.reloadRouterView();
@@ -59,7 +63,7 @@ export default class extends Vue {
 
 
 <style lang="less" scoped>
-.host {
+.topbar-right-btn {
   height: 100%;
 }
 .right-menu-button {
