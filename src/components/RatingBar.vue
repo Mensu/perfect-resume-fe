@@ -109,7 +109,7 @@ export default class extends Vue {
   }
 }
 
-:not(.readonly) > .description::before {
+.description::before {
   content: counter(value);
 }
 
