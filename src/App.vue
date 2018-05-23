@@ -45,8 +45,6 @@ export default class extends Vue {
   @Provide()
   async reloadRouterView() {
     this.$router.push('_');
-    await this.$nextTick();
-    this.$router.back();
   }
 }
 </script>
