@@ -1,39 +1,80 @@
 import { api } from './api';
 
 class TemplateAPI {
+  /**
+   * @return {Promise<Template[]>}
+   */
   async getTemplates() {
     return [{
-      image: '/favicon.ico',
-      title: 'Breakfast',
-      author: 'Myron',
+      templateId: 1,
+      name: 'C++工程师简历',
+      description: '精通C++20',
+      rating: 4.6,
+      myRating: 5,
+      user: {
+        userId: 1,
+        nickname: '用户1',
+      },
     }, {
-      image: '/favicon.ico',
-      title: 'Burger',
-      author: 'Linyu',
+      templateId: 2,
+      name: 'Java工程师简历',
+      description: '精通Java8',
+      rating: 4.5,
+      myRating: null,
+      user: {
+        userId: 2,
+        nickname: '用户2',
+      },
     }, {
-      image: '/favicon.ico',
-      title: 'Camera',
-      author: 'ruolin',
+      templateId: 3,
+      name: 'C++工程师简历',
+      description: '精通C++20',
+      rating: 3.2,
+      myRating: 3,
+      user: {
+        userId: 1,
+        nickname: '用户1',
+      },
     }, {
-      image: '/favicon.ico',
-      title: 'Hats',
-      author: 'kakali',
+      templateId: 4,
+      name: 'Java工程师简历',
+      description: '精通Java8',
+      rating: 4.5,
+      myRating: null,
+      user: {
+        userId: 2,
+        nickname: '用户2',
+      },
     }, {
-      image: '/favicon.ico',
-      title: 'Honey',
-      author: 'yuyang',
+      templateId: 5,
+      name: 'C++工程师简历',
+      description: '精通C++20',
+      rating: 5,
+      myRating: 5,
+      user: {
+        userId: 1,
+        nickname: '用户1',
+      },
     }, {
-      image: '/favicon.ico',
-      title: 'Morning',
-      author: 'mokayi',
+      templateId: 6,
+      name: 'Java工程师简历',
+      description: '精通Java8',
+      rating: 2,
+      myRating: null,
+      user: {
+        userId: 2,
+        nickname: '用户2',
+      },
     }, {
-      image: '/favicon.ico',
-      title: 'Vegetables',
-      author: 'NUyyyyyyy',
-    }, {
-      image: '/favicon.ico',
-      title: 'water',
-      author: 'TDDyyyyyyy',
+      templateId: 7,
+      name: 'C++工程师简历',
+      description: '精通C++20',
+      rating: 4.6,
+      myRating: 5,
+      user: {
+        userId: 1,
+        nickname: '用户1',
+      },
     }];
   }
 }
