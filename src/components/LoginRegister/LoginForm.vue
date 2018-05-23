@@ -1,8 +1,9 @@
 <template>
   <div>
-    <mu-text-field class="w-p100" label="用户名" icon="person" labelFloat v-model="username"/>
-    <mu-text-field class="w-p100" label="密码" icon="lock" labelFloat type="password"
-                    v-model="password" />
+    <mu-text-field class="w-p100" label="用户名" icon="person" labelFloat
+                    v-model="username" @keyup.native.enter="doLogin()"/>
+    <mu-text-field class="w-p100" label="密码" icon="lock" labelFloat
+                   type="password" v-model="password" @keyup.native.enter="doLogin()"/>
     <mu-raised-button class="w-p100 mt-30" :label="isLoggingIn ? '登录中...' : '登录'"
                       @click="doLogin()" :disabled="isLoggingIn" primary/>
   </div>
@@ -30,6 +31,7 @@ export default class extends Vue {
   async doLogin() {
     if (this.isLoggingIn) return;
     const { username, password } = this;
+    // TODO: 检查用户名密码是否为空
     this.isLoggingIn = true;
     try {
       await this.login({ username, password });

@@ -15,7 +15,12 @@
 
 <script>
 import { Component, Vue, Watch, Inject } from 'vue-property-decorator';
+import { namespace, State } from 'vuex-class';
+import { user as userstore } from '../../store/modules/user';
+
 import TopbarRightBtn from './TopbarRightBtn';
+
+const UserModule = namespace(userstore.name);
 
 @Component({
   name: 'topbar',
@@ -24,6 +29,8 @@ import TopbarRightBtn from './TopbarRightBtn';
   },
 })
 export default class extends Vue {
+  @State isLoginRegisterOpen;
+  @UserModule.State isAdmin;
   activeTab = '/';
 
   @Inject() reloadRouterView;
@@ -39,7 +46,7 @@ export default class extends Vue {
   get path() {
     let { path } = this.$route;
     const { pending } = this.$router.history || {};
-    if (pending) {
+    if (this.isLoginRegisterOpen && pending) {
       ({ path } = pending);
     }
     if (!this.tabs[path]) {

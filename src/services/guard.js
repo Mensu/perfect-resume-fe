@@ -3,12 +3,12 @@ import { OPEN_LOGIN_FORM } from '../store/actions';
 import { user as userstore } from '../store/modules/user';
 
 /**
- * @param {boolean} waitForLogin
+ * @param {boolean} [waitForLogin] 默认为 true
  * @return {boolean} true: 应阻止路由跳转
  */
-export async function guardLogin() {
+export async function guardLogin(waitForLogin = true) {
   if (!store.state.isLoggedIn) {
-    await store.dispatch(OPEN_LOGIN_FORM, { waitForLogin: true });
+    await store.dispatch(OPEN_LOGIN_FORM, { waitForLogin });
   }
   return !store.state.isLoggedIn;
 }
@@ -18,14 +18,16 @@ export function guardAdmin() {
 }
 
 export async function beforeEnterGuardLogin(to, from, next) {
-  if (await guardLogin()) {
+  const isFirstPage = from.matched.length === 0;
+  if (await guardLogin(isFirstPage)) {
     return next(false);
   }
   return next();
 }
 
 export async function beforeEnterGuardAdmin(to, from, next) {
-  if (await guardLogin()) {
+  const isFirstPage = from.matched.length === 0;
+  if (await guardLogin(isFirstPage)) {
     return next(false);
   }
   if (guardAdmin()) {
