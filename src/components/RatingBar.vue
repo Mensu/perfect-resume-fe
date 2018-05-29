@@ -1,6 +1,6 @@
 <template>
   <div class="rating-bar" :class="{ readonly: readOnly, 'has-val': val }">
-    <div class="star-container">
+    <div class="star-container cspt">
       <mu-icon class="star" :class="{ current, half }" value=" "
               v-for="({ current, half }, idx) in icons" :key="idx"
               @click="$emit('input', idx + 1)" />

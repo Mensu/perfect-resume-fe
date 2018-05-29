@@ -103,7 +103,4 @@ export default class extends Vue {
   width: 250px;
   margin: 10px;
 }
-.mu-dialog .rating-bar {
-  cursor: pointer;
-}
 </style>
