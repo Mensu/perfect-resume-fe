@@ -7,7 +7,6 @@
       </transition>
     </div>
     <login-register/>
-    <mu-back-top/>
   </div>
 </template>
 

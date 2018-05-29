@@ -15,16 +15,26 @@
           <div class="mt-20">{{ oneTmpl.description }}</div>
         </mu-card-text>
         <mu-card-actions>
-          <mu-flat-button label="下载" icon="file_download" @click="download(oneTmpl)"/>
-          <mu-flat-button label="评分" icon="star_border" @click="openRatingDialog(oneTmpl)"/>
+          <mu-button flat @click="download(oneTmpl)">
+            <mu-icon left value="file_download"/>
+            下载
+          </mu-button>
+          <mu-button flat @click="openRatingDialog(oneTmpl)">
+            <mu-icon left value="star_border"/>
+            评分
+          </mu-button>
         </mu-card-actions>
       </mu-card>
     </div>
     <mu-dialog v-if="templateToRate" :open="!!templateToRate" dialog-class="max-w-400"
               :title="'给《' + templateToRate.name + '》评分'" @close="closeRatingDialog()">
       <rating-bar v-model="myRating" :max="5"/>
-      <mu-flat-button label="取消" slot="actions" @click="closeRatingDialog()"/>
-      <mu-flat-button label="确定" slot="actions" primary :disabled="!myRating" @click="doRating()"/>
+      <mu-button flat slot="actions" @click="closeRatingDialog()">
+        取消
+      </mu-button>
+      <mu-button flat slot="actions" color="primary" :disabled="!myRating" @click="doRating()">
+        确定
+      </mu-button>
     </mu-dialog>
   </div>
 </template>

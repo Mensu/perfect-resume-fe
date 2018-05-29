@@ -1,24 +1,46 @@
 <template>
-  <mu-row>
-    <mu-col class="horizontal-center" tablet="100" desktop="80">
+  <mu-row justify-content="center">
+    <mu-col class="horizontal-center" span="11" lg="9">
       <div class="menu">
-        <mu-paper>
+        <mu-paper :z-depth="2">
           <mu-menu>
-            <mu-menu-item title="个人设置" leftIcon="settings"/>
-            <mu-menu-item title="密码设置" leftIcon="person_add"/>
-            <mu-divider/>
-            <mu-menu-item title="我上传的模板" leftIcon="content_copy"/>
-            <mu-menu-item title="我评分过的模板" leftIcon="file_download"/>
+            <mu-list>
+              <mu-list-item button>
+                <mu-list-item-action>
+                  <mu-icon value="settings"/>
+                </mu-list-item-action>
+                <mu-list-item-title>个人设置</mu-list-item-title>
+              </mu-list-item>
+              <mu-list-item button>
+                <mu-list-item-action>
+                  <mu-icon value="person_add"/>
+                </mu-list-item-action>
+                <mu-list-item-title>密码设置</mu-list-item-title>
+              </mu-list-item>
+              <mu-divider/>
+              <mu-list-item button>
+                <mu-list-item-action>
+                  <mu-icon value="content_copy"/>
+                </mu-list-item-action>
+                <mu-list-item-title>我上传的模板</mu-list-item-title>
+              </mu-list-item>
+              <mu-list-item button>
+                <mu-list-item-action>
+                  <mu-icon value="file_download"/>
+                </mu-list-item-action>
+                <mu-list-item-title>我评分过的模板</mu-list-item-title>
+              </mu-list-item>
+            </mu-list>
           </mu-menu>
         </mu-paper>
       </div>
       <div class="content">
-        <mu-paper class="w-p100">
-          <mu-content-block>
+        <mu-paper class="w-p100" :z-depth="2">
+          <div class="content-block">
             <h1 class="fs-24 lh-36">内容</h1>
             <hr/>
             ...
-          </mu-content-block>
+          </div>
         </mu-paper>
       </div>
     </mu-col>

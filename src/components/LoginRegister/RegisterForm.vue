@@ -6,7 +6,9 @@
                     v-model="password" />
     <mu-text-field class="w-p100" label="确认密码" icon="lock" labelFloat type="password"
                     v-model="confirmingPassword" />
-    <mu-raised-button class="w-p100 mt-30" label="注册" @click="doRegister()" primary/>
+    <mu-button class="w-p100 mt-30" @click="doRegister()" color="primary">
+      注册
+    </mu-button>
   </div>
 </template>
 

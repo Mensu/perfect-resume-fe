@@ -47,7 +47,7 @@ export default class extends Vue {
 </script>
 
 <style lang="less" scoped>
-@import "../../node_modules/muse-ui/src/styles/themes/variables/light.less";
+@import "../../node_modules/muse-ui/lib/styles/vars.less";
 @dimStarColor: rgb(198, 209, 222);
 
 .transition() {

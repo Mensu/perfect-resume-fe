@@ -1,10 +1,8 @@
-@import "../node_modules/muse-ui/src/styles/themes/variables/light.less";
+@import "../node_modules/muse-ui/lib/styles/vars.less";
 
 .mu-tabs.flat-tabs {
   background-color: transparent;
-  .mu-tab-link {
-    color: fadeout(black, 46%);
-  }
+  color: fadeout(black, 46%);
   .mu-tab-active {
     color: @primaryColor;
   }
@@ -28,6 +26,21 @@
 
 .cspt {
   cursor: pointer;
+}
+
+.content-block {
+  padding: 8px 16px;
+  width: 100%;
+  p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 // 原子类

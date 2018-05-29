@@ -1,10 +1,14 @@
 <template>
-  <mu-appbar>
-    <mu-icon-button icon="description" slot="left"/>
+  <mu-appbar color="primary">
+    <mu-button icon slot="left">
+      <mu-icon value="description" />
+    </mu-button>
     <div class="title">完美简历</div>
     <div class="tabs">
-      <mu-tabs class="w-p60" :value="path" @change="switchTab($event)">
-        <mu-tab v-for="[to, title] in Object.entries(tabs)" :key="to" :value="to" :title="title"/>
+      <mu-tabs :value="path" @change="switchTab($event)" center>
+        <mu-tab v-for="[to, title] in Object.entries(tabs)" :key="to" :value="to">
+          {{ title }}
+        </mu-tab>
       </mu-tabs>
     </div>
     <template slot="right">
@@ -65,9 +69,12 @@ export default class extends Vue {
 </script>
 
 <style lang="less" scoped>
-.mu-appbar /deep/ .mu-appbar-title {
-  display: flex;
-  align-items: center;
+.mu-appbar {
+  width: 100%;
+  & /deep/ .mu-appbar-title {
+    display: flex;
+    align-items: center;
+  }
 }
 .title {
   flex: 0 0 auto;
