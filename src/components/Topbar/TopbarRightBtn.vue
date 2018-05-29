@@ -1,20 +1,33 @@
 <template>
   <div class="topbar-right-btn">
     <template v-if="isLoggedIn">
-      <mu-flat-button class="pl-16 right-menu-button right-btn" color="white"
-                      ref="rightMenuButton" :label="nickname" @click="isRightMenuOpen = true">
-        <img class="w-30 h-30" src="../../assets/logo.png"/>
-      </mu-flat-button>
-      <mu-popover :open="isRightMenuOpen" :trigger="trigger"
-                  @close="isRightMenuOpen = false">
-        <mu-menu @itemClick="isRightMenuOpen = false">
-          <mu-menu-item title="个人设置" leftIcon="settings" to="/user-center"/>
-          <mu-menu-item title="登出" leftIcon="exit_to_app" @click="doLogout()"/>
+      <mu-button flat class="right-menu-button right-menu" ref="rightMenuButton"
+                      @click="isRightMenuOpen = true">
+        <img class="w-30 h-30 mr-10 v-center" src="../../assets/logo.png"/>
+        <span class="v-center">{{ nickname }}</span>
+      </mu-button>
+      <mu-popover :open.sync="isRightMenuOpen" :trigger="trigger" placement="bottom">
+        <mu-menu>
+          <mu-list class="right-menu" @click="isRightMenuOpen = false">
+            <mu-list-item button to="/user-center">
+              <mu-list-item-action>
+                <mu-icon value="settings"/>
+              </mu-list-item-action>
+              <mu-list-item-title>个人设置</mu-list-item-title>
+            </mu-list-item>
+            <mu-list-item button @click="doLogout()">
+              <mu-list-item-action>
+                <mu-icon value="exit_to_app"/>
+              </mu-list-item-action>
+              <mu-list-item-title>登出</mu-list-item-title>
+            </mu-list-item>
+          </mu-list>
         </mu-menu>
       </mu-popover>
     </template>
-    <mu-flat-button v-else class="right-btn" color="white" label="登录 / 注册"
-                    @click="openLoginRegister()"/>
+    <mu-button flat v-else class="right-menu" @click="openLoginRegister()">
+      登录 / 注册
+    </mu-button>
   </div>
 </template>
 
@@ -69,7 +82,7 @@ export default class extends Vue {
 .right-menu-button {
   text-transform: unset;
 }
-.right-btn {
+.right-menu {
   width: 168px;
 }
 </style>

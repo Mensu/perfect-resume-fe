@@ -4,8 +4,9 @@
                     v-model="username" @keyup.native.enter="doLogin()"/>
     <mu-text-field class="w-p100" label="密码" icon="lock" labelFloat
                    type="password" v-model="password" @keyup.native.enter="doLogin()"/>
-    <mu-raised-button class="w-p100 mt-30" :label="isLoggingIn ? '登录中...' : '登录'"
-                      @click="doLogin()" :disabled="isLoggingIn" primary/>
+    <mu-button class="w-p100 mt-30" @click="doLogin()" :disabled="isLoggingIn" color="primary">
+      {{ isLoggingIn ? '登录中...' : '登录' }}
+    </mu-button>
   </div>
 </template>
 
