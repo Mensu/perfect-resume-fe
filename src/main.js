@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import MuseUI from 'muse-ui'
+import theme from 'muse-ui/lib/theme';
 import 'muse-ui/dist/muse-ui.css'
-import 'muse-ui/dist/theme-light.css'
 
 import App from './App';
 import RatingBar from './components/RatingBar';
@@ -13,6 +13,7 @@ import './global.less'
 
 Vue.use(PipeService);
 Vue.use(MuseUI);
+theme.use('light');
 Vue.component('rating-bar', RatingBar);
 Vue.config.productionTip = false;
 

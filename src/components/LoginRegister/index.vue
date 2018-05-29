@@ -1,9 +1,10 @@
 <template>
   <mu-dialog v-if="isLoginRegisterOpen" :open="isLoginRegisterOpen" dialog-class="max-w-400"
             @close="close(); activeTab = 'login'">
-    <mu-tabs class="flat-tabs" :value="activeTab" @change="activeTab = $event">
-      <mu-tab value="login" title="登录"/>
-      <mu-tab value="register" title="注册"/>
+    <mu-tabs class="flat-tabs" center :value="activeTab"
+            @change="activeTab = $event">
+      <mu-tab value="login">登录</mu-tab>
+      <mu-tab value="register">注册</mu-tab>
     </mu-tabs>
     <div class="pt-25 pb-25">
       <login-form v-if="activeTab === 'login'"/>
