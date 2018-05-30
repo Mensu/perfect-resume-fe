@@ -5,7 +5,7 @@
     </mu-button>
     <div class="title">完美简历</div>
     <div class="tabs">
-      <mu-tabs :value="path" @change="switchTab($event)" center>
+      <mu-tabs class="w-p70" :value="path" @change="switchTab($event)" center full-width>
         <mu-tab v-for="[to, title] in Object.entries(tabs)" :key="to" :value="to">
           {{ title }}
         </mu-tab>
