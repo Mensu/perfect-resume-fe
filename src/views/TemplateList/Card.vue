@@ -28,6 +28,7 @@
 <script>
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { guardLogin } from '../../services/guard';
+import { axiosDefaults } from '../../services/api';
 
 @Component({
   name: 'card',
@@ -53,8 +54,7 @@ export default class extends Vue {
    * @param {Template} template
    */
   download(template) {
-    // TODO: 生成下载链接
-    window.open('/favicon.ico', '_blank');
+    window.open(`${axiosDefaults.baseURL}/resume/${template.downloadPath}`, '_blank');
   }
 }
 </script>
@@ -62,9 +62,7 @@ export default class extends Vue {
 <style lang="less" scoped>
 @import './vars.less';
 .mu-card {
-  display: inline-block;
-  width: 250px;
-  margin: @card-margin;
+  .card();
 }
 .center {
   display: flex;

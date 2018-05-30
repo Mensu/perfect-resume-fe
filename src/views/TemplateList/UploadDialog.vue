@@ -27,12 +27,20 @@
 
 <script>
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
+import { template as tmplstore } from '../../store/modules/template';
+import { UPLOAD } from '../../store/modules/template/actions';
 import { guardLogin } from '../../services/guard';
+import { SnakeBar } from '../../services/snakebar';
+
+const TmplModule = namespace(tmplstore.name);
 
 @Component({
   name: 'template-list',
 })
 export default class extends Vue {
+  @TmplModule.Action(UPLOAD) upload;
+
   @Prop({ type: Boolean, default: false })
   open;
 
@@ -51,7 +59,6 @@ export default class extends Vue {
 
   close() {
     this.$emit('update:open', false);
-    this.$emit('close');
     this.file = null;
   }
 
@@ -59,8 +66,8 @@ export default class extends Vue {
     if (await guardLogin(false)) {
       return;
     }
-    // TODO: 上传
-    console.log(this.name, this.file);
+    await this.upload(this.file, this.name);
+    SnakeBar.success('上传成功');
     this.close();
   }
 }

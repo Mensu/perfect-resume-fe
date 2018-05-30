@@ -5,7 +5,7 @@
     <mu-button flat slot="actions" @click="close()">
       取消
     </mu-button>
-    <mu-button flat slot="actions" color="primary" :disabled="!myRating" @click="rate()">
+    <mu-button flat slot="actions" color="primary" :disabled="!myRating" @click="doRate()">
       确定
     </mu-button>
   </mu-dialog>
@@ -13,11 +13,19 @@
 
 <script>
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
+import { template as tmplstore } from '../../store/modules/template';
+import { RATE_TEMPLATE } from '../../store/modules/template/actions';
+import { SnakeBar } from '../../services/snakebar';
+
+const TmplModule = namespace(tmplstore.name);
 
 @Component({
   name: 'rating-dialog',
 })
 export default class extends Vue {
+  @TmplModule.Action(RATE_TEMPLATE) rate;
+
   @Prop({ type: Object, default: null })
   tmpl;
 
@@ -30,16 +38,17 @@ export default class extends Vue {
 
   close() {
     this.$emit('update:tmpl', null);
-    this.$emit('close');
     this.myRating = 0;
   }
 
-  async rate() {
+  async doRate() {
     if (this.myRating === this.tmpl.myRating) {
       this.close();
       return;
     }
-    // TODO: 修改评分
+    const { tmpl: { templateId }, myRating } = this;
+    await this.rate({ templateId, myRating });
+    SnakeBar.success('评分成功');
     this.close();
   }
 }
