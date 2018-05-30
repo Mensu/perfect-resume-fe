@@ -1,21 +1,26 @@
 import axios from 'axios'
+import { SnakeBar } from './snakebar'
 
 /** @type {AxiosRequestConfig} */
-const axiosDefaults = {
-  baseURL: `${window.location.origin}/api`,
+export const axiosDefaults = {
+  baseURL: '/springMVC-demo',
   xsrfCookieName: 'X-CSRF-Token',
   xsrfHeaderName: 'X-CSRF-Token',
-};
+}
 
-const xsrfCookieRegExp = new RegExp(`${axiosDefaults.xsrfCookieName}=(\\S+);`);
+const xsrfCookieRegExp = new RegExp(`${axiosDefaults.xsrfCookieName}=(\\S+);`)
 
 class API {
-  client = axios.create(axiosDefaults)
+  constructor(config) {
+    this.client = axios.create({ ...axiosDefaults, ...config })
+    this.client.interceptors.response.use(r => r, (err) => {
+      SnakeBar.err(err.message)
+      return Promise.reject(err)
+    })
+  }
 
   get mock() {
-    const mockAPI = new API()
-    mockAPI.client = axios.create({ ...axiosDefaults, baseURL: 'mock/api' })
-    return mockAPI
+    return new API({ baseURL: 'https://private-0e87b-perfectresume1.apiary-mock.com/springMVC-demo' })
   }
 
   /**
@@ -74,7 +79,7 @@ class API {
   /**
    * 请求代理
    * @param {AxiosRequestConfig} config
-   * @return {Promise<AxiosResponse>}
+   * @return {Promise<any>}
    */
   async request(config) {
     if (config.method !== 'GET') {
@@ -95,4 +100,16 @@ function decodeHtml(html) {
   return element.innerText
 }
 
-export const api = new API();
+export const api = new API()
+
+/**
+ * @param {any} result
+ * @param {string} msg 如果检查失败，应该抛出什么字符串
+ */
+export function checkResult(result, msg) {
+  if (result && (result === true || result === 'true')) {
+    return
+  }
+  SnakeBar.error(msg)
+  throw new Error(msg)
+}

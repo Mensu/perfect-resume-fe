@@ -1,81 +1,65 @@
-import { api } from './api';
+import { api, checkResult } from './api';
+import { store } from '../store';
+import { user as userstore } from '../store/modules/user';
+
+const text = { responseType: 'text' };
+const ratings = [5, 3.7, 4.2, 3.6, 4.8, 4.5, 2.9, 3.6, 4.3];
+
+/**
+ * @return {Template}
+ */
+function refactorTmpl(raw) {
+  const { templateId, name, nickname = store.getters.nickname, downloadPath } = raw;
+  return {
+    templateId,
+    name,
+    description: '',
+    rating: ratings[templateId % ratings.length],
+    myRating: null,
+    downloadPath,
+    user: {
+      userId: 0,
+      nickname,
+    },
+  };
+}
 
 class TemplateAPI {
   /**
-   * @return {Promise<Template[]>}
+   * @param {File} file
+   * @param {string} name
    */
+  async uploadTemplate(file, name) {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('name', name);
+    form.append('username', store.getters.username);
+    const result = await api.post('/resume/uploadResume.do', form, text);
+    checkResult(result, '简历模板上传失败');
+  }
+
+  /**
+   * @param {number} templateId
+   */
+  async deleteTemplate(templateId) {
+    const form = new FormData();
+    form.append('templateId', templateId);
+    const result = await api.post('/resume/deleteResume.do', form, text);
+    checkResult(result, '简历模板删除失败');
+  }
+
   async getTemplates() {
-    return [{
-      templateId: 1,
-      name: 'C++工程师简历',
-      description: '精通C++20',
-      rating: 4.6,
-      myRating: 5,
-      user: {
-        userId: 1,
-        nickname: '用户1',
-      },
-    }, {
-      templateId: 2,
-      name: 'Java工程师简历',
-      description: '精通Java8',
-      rating: 4.5,
-      myRating: null,
-      user: {
-        userId: 2,
-        nickname: '用户2',
-      },
-    }, {
-      templateId: 3,
-      name: 'C++工程师简历',
-      description: '精通C++20',
-      rating: 3.2,
-      myRating: 3,
-      user: {
-        userId: 1,
-        nickname: '用户1',
-      },
-    }, {
-      templateId: 4,
-      name: 'Java工程师简历',
-      description: '精通Java8',
-      rating: 4.5,
-      myRating: null,
-      user: {
-        userId: 2,
-        nickname: '用户2',
-      },
-    }, {
-      templateId: 5,
-      name: 'C++工程师简历',
-      description: '精通C++20',
-      rating: 5,
-      myRating: 5,
-      user: {
-        userId: 1,
-        nickname: '用户1',
-      },
-    }, {
-      templateId: 6,
-      name: 'Java工程师简历',
-      description: '精通Java8',
-      rating: 2,
-      myRating: null,
-      user: {
-        userId: 2,
-        nickname: '用户2',
-      },
-    }, {
-      templateId: 7,
-      name: 'C++工程师简历',
-      description: '精通C++20',
-      rating: 4.6,
-      myRating: 5,
-      user: {
-        userId: 1,
-        nickname: '用户1',
-      },
-    }];
+    /** @type {any[]} */
+    const result = await api.post('/resume/getAllResume.do', null);
+    return result.map(refactorTmpl);
+  }
+
+  async getMyTemplates() {
+    const form = new FormData();
+    form.append('username', store.getters.username);
+    /** @type {any[]} */
+    const result = await api.post('/resume/getUserResume.do', form);
+    return result.map(refactorTmpl);
   }
 }
 
