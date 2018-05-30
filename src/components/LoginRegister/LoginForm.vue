@@ -43,7 +43,7 @@ export default class extends Vue {
     this.isLoggingIn = true;
     try {
       await this.login({ username, password });
-      SnakeBar.success('登录成功');
+      SnakeBar.success('成功登录');
     } finally {
       this.isLoggingIn = false;
     }

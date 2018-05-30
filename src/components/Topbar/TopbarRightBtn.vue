@@ -36,6 +36,7 @@ import { Component, Vue, Watch, Inject } from 'vue-property-decorator';
 import { namespace, State, Action } from 'vuex-class';
 import { OPEN_LOGIN_FORM, LOGOUT } from '../../store/actions';
 import { user as userstore } from '../../store/modules/user';
+import { SnakeBar } from '../../services/snakebar';
 
 const UserModule = namespace(userstore.name);
 
@@ -69,6 +70,7 @@ export default class extends Vue {
 
   async doLogout() {
     await this.logout();
+    SnakeBar.success('成功登出');
     await this.reloadRouterView();
   }
 }

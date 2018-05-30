@@ -1,9 +1,9 @@
 <template>
   <form>
-    <mu-text-field class="w-p100" label="用户名" icon="person" label-float
+    <mu-text-field class="w-p100" label="用户名" icon="person" label-float autocomplete="new-username"
                     v-model="username" :error-text="error.username"
                     @input.once="dirty.username = true"/>
-    <mu-text-field class="w-p100" label="昵称" icon="person" label-float
+    <mu-text-field class="w-p100" label="昵称" icon="person" label-float autocomplete="new-username"
                     v-model="nickname" :error-text="error.nickname"
                     @input.once="dirty.nickname = true"/>
     <mu-text-field class="w-p100" label="密码" icon="lock" label-float autocomplete="new-password"
@@ -87,7 +87,7 @@ export default class extends Vue {
     try {
       await this.register({ username, nickname, password });
       await this.login({ username, password });
-      SnakeBar.success('注册成功');
+      SnakeBar.success('成功注册');
     } finally {
       this.isRegistering = false;
     }

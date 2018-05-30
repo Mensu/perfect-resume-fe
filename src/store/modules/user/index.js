@@ -7,8 +7,8 @@ export const user = {
   name: 'user',
   namespaced: true,
   state: {
-    username: '',
-    nickname: '',
+    username: '用户',
+    nickname: '用户',
     isAdmin: false,
   },
   getters: {
