@@ -26,3 +26,20 @@ export function avatar(userId) {
 export function tmplImg(templateId) {
   return '/favicon.ico';
 }
+
+/**
+ * @param {number} size
+ */
+export function fileSize(size) {
+  const units = ['', 'K', 'M', 'G', 'T', 'P'];
+  let text = '空文件';
+  units.reverse().some((unit, idx) => {
+    const threshold = 2 ** (10 * Number(units.length - 1 - idx));
+    if (size < threshold) {
+      return false;
+    }
+    text = `${(size / threshold).toFixed(2)} ${unit}B`;
+    return true;
+  });
+  return text;
+}

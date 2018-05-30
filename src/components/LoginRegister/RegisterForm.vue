@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <mu-text-field class="w-p100" label="用户名" icon="person" labelFloat v-model="username"/>
-    <mu-text-field class="w-p100" label="昵称" icon="person" labelFloat v-model="nickname"/>
-    <mu-text-field class="w-p100" label="密码" icon="lock" labelFloat
+  <form>
+    <mu-text-field class="w-p100" label="用户名" icon="person" label-float v-model="username"/>
+    <mu-text-field class="w-p100" label="昵称" icon="person" label-float v-model="nickname"/>
+    <mu-text-field class="w-p100" label="密码" icon="lock" label-float autocomplete="new-password"
                     v-model="password"
                     :type="passwordIsVisible ? 'text' : 'password'"
                     :action-icon="passwordIsVisible ? 'visibility_off' : 'visibility'"
                     :action-click="() => toggleVisibility('passwordIsVisible')"/>
-    <mu-text-field class="w-p100" label="确认密码" icon="lock" labelFloat
+    <mu-text-field class="w-p100" label="确认密码" icon="lock" label-float autocomplete="new-password"
                     v-model="confirmingPassword"
                     :type="confirmingPasswordIsVisible ? 'text' : 'password'"
                     :action-icon="confirmingPasswordIsVisible ? 'visibility_off' : 'visibility'"
@@ -15,7 +15,7 @@
     <mu-button class="w-p100 mt-30" @click="doRegister()" color="primary">
       注册
     </mu-button>
-  </div>
+  </form>
 </template>
 
 <script>
