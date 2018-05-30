@@ -26,7 +26,7 @@
         </mu-card-actions>
       </mu-card>
     </div>
-    <mu-dialog v-if="templateToRate" :open="!!templateToRate" dialog-class="max-w-400"
+    <mu-dialog v-if="templateToRate" :open="!!templateToRate" dialog-class="min-w-400"
               :title="'给《' + templateToRate.name + '》评分'" @close="closeRatingDialog()">
       <rating-bar v-model="myRating" :max="5"/>
       <mu-button flat slot="actions" @click="closeRatingDialog()">
