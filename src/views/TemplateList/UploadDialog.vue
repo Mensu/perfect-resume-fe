@@ -67,7 +67,7 @@ export default class extends Vue {
       return;
     }
     await this.upload(this.file, this.name);
-    SnakeBar.success('上传成功');
+    SnakeBar.success('成功上传');
     this.close();
   }
 }

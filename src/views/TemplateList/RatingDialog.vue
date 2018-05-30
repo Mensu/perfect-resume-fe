@@ -48,7 +48,7 @@ export default class extends Vue {
     }
     const { tmpl: { templateId }, myRating } = this;
     await this.rate({ templateId, myRating });
-    SnakeBar.success('评分成功');
+    SnakeBar.success('成功评分');
     this.close();
   }
 }
