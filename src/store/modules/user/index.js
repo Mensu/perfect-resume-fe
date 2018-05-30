@@ -13,6 +13,7 @@ export const user = {
   },
   getters: {
     isAdmin: state => state.isAdmin,
+    username: state => state.username,
   },
   mutations,
   actions,

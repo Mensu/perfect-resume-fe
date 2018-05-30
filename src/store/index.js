@@ -16,6 +16,12 @@ export const store = new Vuex.Store({
     isLoggedIn: false,
     isLoginRegisterOpen: false,
     isLoginRegisterClosable: false,
+    snakebarMsg: null,
+    snakebarMsgId: 0,
+  },
+  getters: {
+    username: (state, getters) => getters[`${user.name}/username`],
+    nickname: (state, getters) => getters[`${user.name}/nickname`],
   },
   mutations,
   actions,

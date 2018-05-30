@@ -1,15 +1,17 @@
 import EventEmitter from 'events';
-import { OPEN_LOGIN_REGISTER, CLOSE_LOGIN_REGISTER, SET_LOGIN_STATE, SET_LOGIN_FORM_CLOSABLE, SET_ADMIN } from './mutations';
+import { OPEN_LOGIN_REGISTER, CLOSE_LOGIN_REGISTER, SET_LOGIN_STATE, SET_LOGIN_FORM_CLOSABLE, SET_ADMIN, SET_SNAKEBAR_MSG, INCREMENT_SNAKEBAR_MSG_ID } from './mutations';
 import { user } from './modules/user';
 import { FETCH_USER_PROFILE } from './modules/user/actions';
 import { SET_USER_PROFILE } from './modules/user/mutations';
 import { user_api } from '../services/user_api';
+import { sleep } from '../services/utils';
 
 export const OPEN_LOGIN_FORM = 'OPEN_LOGIN_FORM';
 export const CLOSE_LOGIN_FORM = 'CLOSE_LOGIN_FORM';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-const CLEAR_WAIT_LOGIN = 'CLEAR_WAIT_LOGIN';
+export const REGISTER = 'REGISTER';
+export const PROMPT_MSG = 'TOAST_MSG';
 
 const login = new EventEmitter();
 let waitForLoginPromise = null;
@@ -52,5 +54,26 @@ export const actions = {
   async [CLOSE_LOGIN_FORM]({ commit }) {
     commit(CLOSE_LOGIN_REGISTER);
     login.emit(CLOSE_LOGIN_REGISTER);
+  },
+  async [REGISTER](ctx, { username, nickname, password }) {
+    return user_api.register({ username, nickname, password });
+  },
+  async [PROMPT_MSG](
+    { state, commit },
+    { type = '', msg = '', duration = 4000, icon = '' },
+  ) {
+    commit(SET_SNAKEBAR_MSG, null);
+    commit(INCREMENT_SNAKEBAR_MSG_ID);
+    const { snakebarMsgId } = state;
+    await sleep(10);
+    if (state.snakebarMsgId !== snakebarMsgId) {
+      return;
+    }
+    commit(SET_SNAKEBAR_MSG, { type, msg, icon });
+    await sleep(duration);
+    if (state.snakebarMsgId !== snakebarMsgId) {
+      return;
+    }
+    commit(SET_SNAKEBAR_MSG, null);
   },
 };
