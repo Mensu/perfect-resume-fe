@@ -1,9 +1,14 @@
 <template>
-  <div class="template-list-container mr-10 ml-10">
+  <div class="template-list-container h-center pl-40 pr-40">
     <control v-model="searchKey" @upload-btn-click="isUploadDialogOpen = true"/>
-    <div class="template-list h-center">
+    <div class="template-list">
       <card v-for="tmpl in list" :key="tmpl.templateId"
             :tmpl="tmpl" @open-rating-dialog="openRatingDialog($event)"/>
+      <!-- 这四个玩意是为了防止 space-between 最后一行的崩坏的 workaround -->
+      <div class="after"></div>
+      <div class="after"></div>
+      <div class="after"></div>
+      <div class="after"></div>
     </div>
     <rating-dialog :tmpl.sync="tmplToRate"/>
     <upload-dialog :open.sync="isUploadDialogOpen"/>
@@ -15,20 +20,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { template as tmplstore } from '../../store/modules/template';
 import { FETCH_TEMPLATE_LIST } from '../../store/modules/template/actions';
+import { match } from '../../services/utils';
 import Control from './Control';
 import Card from './Card';
 import RatingDialog from './RatingDialog';
 import UploadDialog from './UploadDialog';
 
 const TmplModule = namespace(tmplstore.name);
-
-/**
- * @param {string} src
- * @param {string} target
- */
-function match(src, target) {
-  return src.toLowerCase().includes(target.toLowerCase());
-}
 
 @Component({
   name: 'template-list',
@@ -76,8 +74,10 @@ export default class extends Vue {
 @import './vars.less';
 .template-list-container {
   max-width: 1280px;
-  margin-left: @list-margin;
-  margin-right: @list-margin;
+}
+.after {
+  height: 0;
+  .card();
 }
 .template-list {
   display: flex;
