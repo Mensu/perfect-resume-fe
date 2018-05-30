@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open --max-old-space-size=4096",
+    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "vue-cli": "vue-cli-service"
@@ -25,10 +25,10 @@
     "vuex-class": "^0.3.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.12",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.12",
-    "@vue/cli-service": "^3.0.0-beta.12",
-    "@vue/eslint-config-airbnb": "^3.0.0-beta.12",
+    "@vue/cli-plugin-babel": "^3.0.0-beta.14",
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.14",
+    "@vue/cli-service": "^3.0.0-beta.14",
+    "@vue/eslint-config-airbnb": "^3.0.0-beta.14",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "vue-template-compiler": "^2.5.13"
