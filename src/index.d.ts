@@ -16,7 +16,9 @@ declare module 'axios' {
 
   interface User {
     userId: number
+    username: string
     nickname: string
+    password: string
   }
 
   interface Template {
@@ -25,6 +27,7 @@ declare module 'axios' {
     description: string
     rating: number
     myRating?: number
+    downloadPath: string
     user: User
   }
 }

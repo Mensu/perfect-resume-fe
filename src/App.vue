@@ -7,11 +7,18 @@
       </transition>
     </div>
     <login-register/>
+    <mu-snackbar position="top"
+                  :color="snakebarMsg && snakebarMsg.type"
+                  :open="!!snakebarMsg">
+      <mu-icon v-if="snakebarMsg" left :value="snakebarMsg.icon"/>
+      {{ snakebarMsg && snakebarMsg.msg }}
+    </mu-snackbar>
   </div>
 </template>
 
 <script>
 import { Component, Vue, Provide, Watch } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import Topbar from './components/Topbar';
 import LoginRegister from './components/LoginRegister';
 
@@ -27,6 +34,7 @@ import LoginRegister from './components/LoginRegister';
   },
 })
 export default class extends Vue {
+  @State snakebarMsg;
   transition = 'slide-left';
   router = {};
 
