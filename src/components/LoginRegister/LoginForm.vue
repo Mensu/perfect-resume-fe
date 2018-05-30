@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <mu-text-field class="w-p100" label="用户名" icon="person" labelFloat
-                    v-model="username" @keyup.native.enter="doLogin()"/>
-    <mu-text-field class="w-p100" label="密码" icon="lock" labelFloat
-                   type="password" v-model="password" @keyup.native.enter="doLogin()"/>
+  <form>
+    <mu-text-field class="w-p100" label="用户名" icon="person" label-float autocomplete="username"
+                    v-model="username" @keyup.enter="doLogin()"/>
+    <mu-text-field class="w-p100" label="密码" icon="lock" label-float autocomplete="current-password"
+                   v-model="password"
+                   :type="passwordIsVisible ? 'text' : 'password'"
+                   :action-icon="passwordIsVisible ? 'visibility_off' : 'visibility'"
+                   :action-click="() => passwordIsVisible = !passwordIsVisible"
+                   @keyup.enter="doLogin()"/>
     <mu-button class="w-p100 mt-30" @click="doLogin()" :disabled="isLoggingIn" color="primary">
       {{ isLoggingIn ? '登录中...' : '登录' }}
     </mu-button>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -22,6 +26,7 @@ export default class extends Vue {
   username = '';
   password = '';
   isLoggingIn = false;
+  passwordIsVisible = false;
   @Action(LOGIN) login;
 
   reset() {

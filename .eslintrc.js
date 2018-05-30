@@ -35,5 +35,6 @@ module.exports = {
     'object-curly-newline': 'off',
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
+    'no-multi-spaces': 'off',
   },
 }

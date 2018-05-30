@@ -1,7 +1,7 @@
 <template>
   <mu-appbar color="primary">
     <mu-button icon slot="left">
-      <mu-icon value="description" />
+      <mu-icon value="description"/>
     </mu-button>
     <div class="title">完美简历</div>
     <div class="tabs">
