@@ -19,7 +19,8 @@
     <mu-button flat slot="actions" @click="close()">
       取消
     </mu-button>
-    <mu-button flat slot="actions" color="primary" :disabled="!isFormValid" @click="doUpload()">
+    <mu-button flat slot="actions" color="primary" :disabled="!isFormValid || isUploading"
+                @click="doUpload()">
       上传
     </mu-button>
   </mu-dialog>
@@ -28,10 +29,10 @@
 <script>
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import { template as tmplstore } from '../../store/modules/template';
-import { UPLOAD } from '../../store/modules/template/actions';
-import { guardLogin } from '../../services/guard';
-import { SnakeBar } from '../../services/snakebar';
+import { template as tmplstore } from '../../../store/modules/template';
+import { FETCH_TEMPLATE_LIST, UPLOAD } from '../../../store/modules/template/actions';
+import { guardLogin } from '../../../services/guard';
+import { SnakeBar } from '../../../services/snakebar';
 
 const TmplModule = namespace(tmplstore.name);
 
@@ -40,12 +41,15 @@ const TmplModule = namespace(tmplstore.name);
 })
 export default class extends Vue {
   @TmplModule.Action(UPLOAD) upload;
+  @TmplModule.Action(FETCH_TEMPLATE_LIST) fetchList;
 
   @Prop({ type: Boolean, default: false })
   open;
 
   name = '';
   file = null;
+
+  isUploading = false;
 
   get isFormValid() {
     return this.name.length > 0 && this.file;
@@ -59,6 +63,7 @@ export default class extends Vue {
 
   close() {
     this.$emit('update:open', false);
+    this.name = '';
     this.file = null;
   }
 
@@ -66,9 +71,14 @@ export default class extends Vue {
     if (await guardLogin(false)) {
       return;
     }
-    await this.upload(this.file, this.name);
-    SnakeBar.success('成功上传');
-    this.close();
+    this.isUploading = true;
+    try {
+      await this.upload(this.file, this.name);
+      SnakeBar.success('成功上传');
+      this.close();
+    } finally {
+      this.isUploading = false;
+    }
   }
 }
 </script>

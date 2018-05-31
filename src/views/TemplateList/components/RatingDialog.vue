@@ -5,7 +5,8 @@
     <mu-button flat slot="actions" @click="close()">
       取消
     </mu-button>
-    <mu-button flat slot="actions" color="primary" :disabled="!myRating" @click="doRate()">
+    <mu-button flat slot="actions" color="primary" :disabled="!myRating || isRating"
+                @click="doRate()">
       确定
     </mu-button>
   </mu-dialog>
@@ -14,9 +15,9 @@
 <script>
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import { template as tmplstore } from '../../store/modules/template';
-import { RATE_TEMPLATE } from '../../store/modules/template/actions';
-import { SnakeBar } from '../../services/snakebar';
+import { template as tmplstore } from '../../../store/modules/template';
+import { FETCH_TEMPLATE_LIST, RATE_TEMPLATE } from '../../../store/modules/template/actions';
+import { SnakeBar } from '../../../services/snakebar';
 
 const TmplModule = namespace(tmplstore.name);
 
@@ -25,11 +26,13 @@ const TmplModule = namespace(tmplstore.name);
 })
 export default class extends Vue {
   @TmplModule.Action(RATE_TEMPLATE) rate;
+  @TmplModule.Action(FETCH_TEMPLATE_LIST) fetchList;
 
   @Prop({ type: Object, default: null })
   tmpl;
 
   myRating = 0;
+  isRating = false;
 
   @Watch('tmpl')
   tmplChange(tmpl) {
@@ -47,15 +50,20 @@ export default class extends Vue {
       return;
     }
     const { tmpl: { templateId }, myRating } = this;
-    await this.rate({ templateId, myRating });
-    SnakeBar.success('成功评分');
-    this.close();
+    this.isRating = true;
+    try {
+      await this.rate({ templateId, myRating });
+      SnakeBar.success('成功评分');
+      this.close();
+    } finally {
+      this.isRating = false;
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
-@import './vars.less';
+@import '../vars.less';
 .template-list-container {
   max-width: 1280px;
   margin-left: @list-margin;
