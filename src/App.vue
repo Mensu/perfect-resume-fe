@@ -46,7 +46,13 @@ export default class extends Vue {
       '/admin': 2,
       '/_': 0,
     };
-    this.transition = `slide-${order[$route.path] > order[$oldRoute.path] ? 'left' : 'right'}`;
+    const direction = order[this.stripPath($route)] > order[this.stripPath($oldRoute)] ? 'left' : 'right';
+    this.transition = `slide-${direction}`;
+  }
+
+  stripPath($route) {
+    const nextSlashIdx = $route.path.slice(1).indexOf('/') + 1;
+    return nextSlashIdx === 0 ? $route.path : $route.path.slice(0, nextSlashIdx);
   }
 
   @Provide()
