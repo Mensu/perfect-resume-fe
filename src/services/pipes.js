@@ -43,3 +43,17 @@ export function fileSize(size) {
   });
   return text;
 }
+
+/**
+ * @param {boolean} visible
+ */
+export function visibilityIcon(visible) {
+  return visible ? 'visibility_off' : 'visibility';
+}
+
+/**
+ * @param {boolean} visible
+ */
+export function visibilityInputType(visible) {
+  return visible ? 'text' : 'password';
+}

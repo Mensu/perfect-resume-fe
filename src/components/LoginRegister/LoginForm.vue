@@ -4,8 +4,8 @@
                     v-model="username" @keyup.enter="doLogin()"/>
     <mu-text-field class="w-p100" label="密码" icon="lock" label-float autocomplete="current-password"
                    v-model="password"
-                   :type="passwordIsVisible ? 'text' : 'password'"
-                   :action-icon="passwordIsVisible ? 'visibility_off' : 'visibility'"
+                   :type="passwordIsVisible | visibilityInputType"
+                   :action-icon="passwordIsVisible | visibilityIcon"
                    :action-click="() => passwordIsVisible = !passwordIsVisible"
                    @keyup.enter="doLogin()"/>
     <mu-button class="w-p100 mt-30" color="primary" @click="doLogin()"
