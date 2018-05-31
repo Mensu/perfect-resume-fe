@@ -27,8 +27,8 @@
 
 <script>
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { guardLogin } from '../../services/guard';
-import { axiosDefaults } from '../../services/api';
+import { guardLogin } from '../../../services/guard';
+import { axiosDefaults } from '../../../services/api';
 
 @Component({
   name: 'card',
@@ -60,7 +60,7 @@ export default class extends Vue {
 </script>
 
 <style lang="less" scoped>
-@import './vars.less';
+@import '../vars.less';
 .mu-card {
   .card();
 }

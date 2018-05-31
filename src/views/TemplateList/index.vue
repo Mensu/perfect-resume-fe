@@ -1,6 +1,9 @@
 <template>
   <div class="template-list-container h-center pl-40 pr-40">
     <control v-model="searchKey" @upload-btn-click="isUploadDialogOpen = true"/>
+    <div class="loading" v-if="isLoading">
+      <mu-circular-progress :size="40"/>
+    </div>
     <div class="template-list">
       <card v-for="tmpl in list" :key="tmpl.templateId"
             :tmpl="tmpl" @open-rating-dialog="openRatingDialog($event)"/>
@@ -21,10 +24,10 @@ import { namespace } from 'vuex-class';
 import { template as tmplstore } from '../../store/modules/template';
 import { FETCH_TEMPLATE_LIST } from '../../store/modules/template/actions';
 import { match } from '../../services/utils';
-import Control from './Control';
-import Card from './Card';
-import RatingDialog from './RatingDialog';
-import UploadDialog from './UploadDialog';
+import Control from './components/Control';
+import Card from './components/Card';
+import RatingDialog from './components/RatingDialog';
+import UploadDialog from './components/UploadDialog';
 
 const TmplModule = namespace(tmplstore.name);
 
@@ -41,12 +44,21 @@ export default class extends Vue {
   @TmplModule.State rawList;
   @TmplModule.Action(FETCH_TEMPLATE_LIST) fetchList;
 
+  isLoading = true;
   tmplToRate = null;
   searchKey = '';
   isUploadDialogOpen = false;
 
-  created() {
-    this.fetchList();
+  async created() {
+    if (this.rawList.length > 0) {
+      this.isLoading = false;
+      return;
+    }
+    try {
+      await this.fetchList();
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   get list() {
@@ -74,6 +86,9 @@ export default class extends Vue {
 @import './vars.less';
 .template-list-container {
   max-width: 1280px;
+}
+.loading {
+  text-align: center;
 }
 .after {
   height: 0;
