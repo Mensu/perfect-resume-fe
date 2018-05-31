@@ -8,14 +8,14 @@
                     @input.once="dirty.nickname = true"/>
     <mu-text-field class="w-p100" label="密码" icon="lock" label-float autocomplete="new-password"
                     v-model="password" :error-text="error.password"
-                    :type="passwordIsVisible ? 'text' : 'password'"
-                    :action-icon="passwordIsVisible ? 'visibility_off' : 'visibility'"
+                    :type="passwordIsVisible | visibilityInputType"
+                    :action-icon="passwordIsVisible | visibilityIcon"
                     :action-click="() => toggleVisibility('passwordIsVisible')"
                     @input.once="dirty.password = true"/>
     <mu-text-field class="w-p100" label="确认密码" icon="lock" label-float autocomplete="new-password"
                     v-model="confirmingPassword" :error-text="error.confirmingPassword"
-                    :type="confirmingPasswordIsVisible ? 'text' : 'password'"
-                    :action-icon="confirmingPasswordIsVisible ? 'visibility_off' : 'visibility'"
+                    :type="confirmingPasswordIsVisible | visibilityInputType"
+                    :action-icon="confirmingPasswordIsVisible | visibilityIcon"
                     :action-click="() => toggleVisibility('confirmingPasswordIsVisible')"
                     @input.once="dirty.confirmingPassword = true"/>
     <mu-button class="w-p100 mt-30" @click="doRegister()" color="primary"
