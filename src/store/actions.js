@@ -20,13 +20,14 @@ export const actions = {
   async [LOGIN]({ commit, dispatch }, { username, password }) {
     await user_api.login(username, password);
     commit(SET_LOGIN_STATE, true);
+    commit(`${user.name}/${SET_USER_PROFILE}`, { username });
     dispatch(`${user.name}/${FETCH_USER_PROFILE}`);
     login.emit(LOGIN);
   },
   async [LOGOUT]({ commit }) {
     await user_api.logout();
     commit(SET_LOGIN_STATE, false);
-    commit(`${user.name}/${SET_USER_PROFILE}`, {});
+    commit(`${user.name}/${SET_USER_PROFILE}`, { username: '用户', nickname: '用户', isAdmin: false });
   },
   async [OPEN_LOGIN_FORM]({ commit, dispatch }, { closable = true, waitForLogin = false } = {}) {
     commit(OPEN_LOGIN_REGISTER, closable);
