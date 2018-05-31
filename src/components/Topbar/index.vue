@@ -6,7 +6,7 @@
     <div class="title">完美简历</div>
     <div class="tabs">
       <mu-tabs class="w-p70" :value="path" @change="switchTab($event)" center full-width>
-        <mu-tab v-for="[to, title] in Object.entries(tabs)" :key="to" :value="to">
+        <mu-tab v-for="{ to, title } in tabs" :key="to" :value="to">
           {{ title }}
         </mu-tab>
       </mu-tabs>
@@ -40,11 +40,17 @@ export default class extends Vue {
   @Inject() reloadRouterView;
 
   get tabs() {
-    return {
-      '/': '简历模板',
-      '/user-center': '用户中心',
-      ...(this.isAdmin && { '/admin': '运营管理' }),
-    };
+    return [{
+      to: '/',
+      title: '简历模板',
+    }, {
+      to: '/user-center',
+      title: '用户中心',
+    },
+    ...(this.isAdmin ? [{
+      to: '/admin',
+      title: '运营管理',
+    }] : [])]
   }
 
   get path() {
@@ -53,7 +59,10 @@ export default class extends Vue {
     if (this.isLoginRegisterOpen && pending) {
       ({ path } = pending);
     }
-    if (!this.tabs[path]) {
+    path = path && this.tabs.slice(1).find(one => path.startsWith(one.to));
+    if (path) {
+      path = path.to;
+    } else {
       path = '/';
     }
     return path;
