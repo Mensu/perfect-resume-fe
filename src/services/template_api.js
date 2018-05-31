@@ -8,7 +8,7 @@ const ratings = [5, 3.7, 4.2, 3.6, 4.8, 4.5, 2.9, 3.6, 4.3];
 /**
  * @return {Template}
  */
-function refactorTmpl(raw) {
+export function refactorTmpl(raw) {
   const { templateId, name, nickname = store.getters.nickname, downloadPath } = raw;
   return {
     templateId,

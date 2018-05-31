@@ -14,7 +14,7 @@ class API {
   constructor(config) {
     this.client = axios.create({ ...axiosDefaults, ...config })
     this.client.interceptors.response.use(r => r, (err) => {
-      SnakeBar.err(err.message)
+      SnakeBar.error(err.message)
       return Promise.reject(err)
     })
   }
