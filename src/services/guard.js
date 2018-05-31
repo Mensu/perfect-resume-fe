@@ -1,6 +1,7 @@
 import { store } from '../store';
 import { OPEN_LOGIN_FORM } from '../store/actions';
 import { user as userstore } from '../store/modules/user';
+import { SnakeBar } from './snakebar';
 
 /**
  * @param {boolean} [waitForLogin] 默认为 true
@@ -8,6 +9,7 @@ import { user as userstore } from '../store/modules/user';
  */
 export async function guardLogin(waitForLogin = true) {
   if (!store.state.isLoggedIn) {
+    SnakeBar.info('请先登录');
     await store.dispatch(OPEN_LOGIN_FORM, { waitForLogin });
   }
   return !store.state.isLoggedIn;
