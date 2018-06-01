@@ -8,6 +8,7 @@ import { sleep } from '../services/utils';
 
 export const OPEN_LOGIN_FORM = 'OPEN_LOGIN_FORM';
 export const CLOSE_LOGIN_FORM = 'CLOSE_LOGIN_FORM';
+export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
@@ -17,6 +18,14 @@ const login = new EventEmitter();
 let waitForLoginPromise = null;
 
 export const actions = {
+  async [CHECK_LOGIN]({ commit, dispatch }) {
+    const isLoggedIn = await user_api.checkIsLoggedIn();
+    if (isLoggedIn) {
+      commit(SET_LOGIN_STATE, isLoggedIn);
+      dispatch(`${user.name}/${FETCH_USER_PROFILE}`);
+    }
+    return isLoggedIn;
+  },
   async [LOGIN]({ commit, dispatch }, { username, password }) {
     await user_api.login(username, password);
     commit(SET_LOGIN_STATE, true);

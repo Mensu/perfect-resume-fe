@@ -5,7 +5,7 @@ const text = { responseType: 'text' };
 
 class UserAPI {
   async checkIsLoggedIn() {
-    const result = await api.mock.post('/user/isLoggedIn', null, text);
+    const result = await api.post('/user/isLoggedIn.do', null, text);
     return result === true;
   }
 
