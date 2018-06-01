@@ -13,6 +13,10 @@
 - `services`: 后端 API 接口
 - `store`: 存储组件公共数据和后端请求数据，连接到组件，并提供修改的接口
 
+## API 文档
+
+[https://perfectresume1.docs.apiary.io](https://perfectresume1.docs.apiary.io/#)
+
 ## 参考
 
 - [vue-class-component](https://github.com/vuejs/vue-class-component)
