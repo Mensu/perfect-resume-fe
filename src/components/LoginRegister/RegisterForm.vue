@@ -59,8 +59,14 @@ export default class extends Vue {
 
   get error() {
     const error = {};
-    if (this.dirty.username && this.username.length === 0) {
-      error.username = '用户名不得为空';
+    if (this.dirty.username) {
+      if (this.username.length === 0) {
+        error.username = '用户名不得为空';
+      } else if (!this.username.match(/^[1-9][0-9]{0,}$/)) {
+        error.username = '用户名只能含数字';
+      } else if (Number(this.username) >= 2 ** 31) {
+        error.username = '用户名必须为 int';
+      }
     }
     if (this.dirty.nickname && this.nickname.length === 0) {
       error.nickname = '昵称不得为空';
