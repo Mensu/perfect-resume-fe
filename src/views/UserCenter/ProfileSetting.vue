@@ -139,7 +139,7 @@ export default class extends Vue {
     if (this.dirty.nickname) {
       if (this.nickname.length === 0) {
         error.nickname = '昵称不得为空';
-      } else if (this.password.length > 45) {
+      } else if (this.nickname.length > 45) {
         error.nickname = '昵称不能太长';
       }
     }
