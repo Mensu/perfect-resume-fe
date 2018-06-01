@@ -5,6 +5,6 @@ export const mutations = {
     const { username, nickname, isAdmin } = { ...state, ...user };
     state.username = username;
     state.nickname = nickname;
-    state.isAdmin = true;
+    state.isAdmin = isAdmin;
   },
 };
