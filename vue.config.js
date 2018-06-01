@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/springMVC-demo': {
-        target: 'https://private-0e87b-perfectresume1.apiary-mock.com',
+        target: 'http://localhost:8080/springMVC-demo',
         ws: true,
         changeOrigin: true,
       },
