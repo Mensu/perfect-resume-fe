@@ -11,6 +11,9 @@ export const axiosDefaults = {
 const xsrfCookieRegExp = new RegExp(`${axiosDefaults.xsrfCookieName}=(\\S+);`)
 
 class API {
+  /**
+   * @param {AxiosRequestConfig} config
+   */
   constructor(config) {
     this.client = axios.create({ ...axiosDefaults, ...config })
     this.client.interceptors.response.use(r => r, (err) => {

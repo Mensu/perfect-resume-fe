@@ -70,6 +70,9 @@ export default class extends Vue {
     }
   }
 
+  /**
+   * @param {string} filter
+   */
   checkFilter(filter) {
     if (!['uploaded', 'rated'].includes(filter)) {
       this.$router.back();

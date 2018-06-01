@@ -53,20 +53,37 @@ export default class extends Vue {
     confirmingPassword: false,
   }
 
+  /**
+   * @param {string} prop
+   */
   toggleVisibility(prop) {
     this[prop] = !this[prop];
   }
 
   get error() {
     const error = {};
-    if (this.dirty.username && this.username.length === 0) {
-      error.username = '用户名不得为空';
+    if (this.dirty.username) {
+      if (this.username.length === 0) {
+        error.username = '用户名不得为空';
+      } else if (!this.username.match(/^[1-9][0-9]{0,}$/)) {
+        error.username = '用户名只能含数字';
+      } else if (Number(this.username) >= 2 ** 31) {
+        error.username = '用户名必须为 int';
+      }
     }
-    if (this.dirty.nickname && this.nickname.length === 0) {
-      error.nickname = '昵称不得为空';
+    if (this.dirty.nickname) {
+      if (this.nickname.length === 0) {
+        error.nickname = '昵称不得为空';
+      } else if (this.password.length > 45) {
+        error.nickname = '昵称不能太长';
+      }
     }
-    if (this.dirty.password && this.password.length === 0) {
-      error.password = '密码不得为空';
+    if (this.dirty.password) {
+      if (this.password.length === 0) {
+        error.password = '密码不得为空';
+      } else if (this.password.length > 45) {
+        error.password = '密码不能太长';
+      }
     }
     if (this.dirty.confirmingPassword && this.confirmingPassword !== this.password) {
       error.confirmingPassword = '确认密码与密码不一致';

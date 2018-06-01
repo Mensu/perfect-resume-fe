@@ -44,12 +44,12 @@ class UserAPI {
     checkResult(result, '注册失败');
   }
 
-  async getProfile(username = store.getters.username) {
+  async getProfile() {
     const form = new FormData();
-    form.append('username', username);
+    form.append('username', store.getters.username);
     const user = await api.post('/user/getUserInfo.do', form);
     return {
-      username,
+      username: store.getters.username,
       nickname: user.nickname,
       isAdmin: Boolean(user.manager === '1'),
     };

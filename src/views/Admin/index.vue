@@ -1,9 +1,13 @@
 <template>
-  <div>
-    <h1>运营管理</h1>
-    <hr/>
-    <template-table :loading="isLoading" :templates="templates"/>
-  </div>
+  <mu-row justify-content="center">
+    <mu-col class="horizontal-center" span="11" lg="9">
+      <div>
+        <h1>运营管理</h1>
+        <hr/>
+        <template-table :loading="isLoading" :templates="templates" :isAdmin="true"/>
+      </div>
+    </mu-col>
+  </mu-row>
 </template>
 
 <script>
@@ -34,6 +38,10 @@ export default class extends Vue {
   isLoading = true;
 
   async created() {
+    if (this.rawList.length > 0) {
+      this.isLoading = false;
+      return;
+    }
     try {
       await this.fetchList();
     } finally {
@@ -44,5 +52,7 @@ export default class extends Vue {
 </script>
 
 <style lang="less" scoped>
-
+h1 {
+  text-align: center;
+}
 </style>

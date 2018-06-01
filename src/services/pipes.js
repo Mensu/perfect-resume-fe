@@ -1,5 +1,6 @@
 import vue from 'vue';
 import * as pipes from './pipes';
+import { axiosDefaults } from './api';
 
 export const PipeService = {
   /**
@@ -56,4 +57,21 @@ export function visibilityIcon(visible) {
  */
 export function visibilityInputType(visible) {
   return visible ? 'text' : 'password';
+}
+
+/**
+ * @param {Template} tmpl
+ */
+export function downloadLink(tmpl) {
+  return `${axiosDefaults.baseURL}/resume/${tmpl.downloadPath}`;
+}
+
+/**
+ * @param {string} filename
+ */
+export function stripFilename(filename) {
+  if (filename.length > 20) {
+    return `${filename.slice(0, 13)}...${filename.slice(-7)}`;
+  }
+  return filename;
 }

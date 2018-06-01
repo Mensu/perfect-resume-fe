@@ -1,9 +1,10 @@
 import { template_api, refactorTmpl } from '../../../services/template_api';
-import { SET_TEMPLATE_LIST, RATE_TEMPLATE, ADD_TEMPLATE } from './mutations';
+import { SET_TEMPLATE_LIST, RATE_TEMPLATE, ADD_TEMPLATE, DELETE_TEMPLATE } from './mutations';
 
 export const FETCH_TEMPLATE_LIST = 'FETCH_TEMPLATE_LIST';
 export { RATE_TEMPLATE } from './mutations';
 export const UPLOAD = 'UPLOAD';
+export const DELETE = 'DELETE';
 
 export const actions = {
   async [FETCH_TEMPLATE_LIST]({ commit }) {
@@ -19,5 +20,10 @@ export const actions = {
     const templateId = state.rawList.reduce((acc, cur) => Math.max(cur.templateId, acc), 0) + 1;
     const { nickname } = rootGetters;
     commit(ADD_TEMPLATE, refactorTmpl({ templateId, name, nickname, downloadPath: `${name}.doc` }));
+  },
+  async [DELETE]({ commit, state }, templateId) {
+    await template_api.deleteTemplate(templateId);
+    // dispatch(FETCH_TEMPLATE_LIST);
+    commit(DELETE_TEMPLATE, templateId);
   },
 };
