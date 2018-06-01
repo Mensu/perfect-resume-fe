@@ -107,11 +107,17 @@ export default class extends Vue {
   }
   /** @type {File} */
   avatarFile = null;
+  avatarURL = null;
   get avatar() {
+    if (this.avatarURL) {
+      URL.revokeObjectURL(this.avatarURL);
+      this.avatarURL = null;
+    }
     if (this.avatarFile === null) {
       return avatar(0);
     }
-    return URL.createObjectURL(this.avatarFile);
+    this.avatarURL = URL.createObjectURL(this.avatarFile);
+    return this.avatarURL;
   }
 
   password = '';
@@ -130,11 +136,18 @@ export default class extends Vue {
 
   get error() {
     const error = {};
-    if (this.dirty.nickname && this.nickname.length === 0) {
-      error.nickname = '昵称不得为空';
+    if (this.dirty.nickname) {
+      if (this.nickname.length === 0) {
+        error.nickname = '昵称不得为空';
+      } else if (this.password.length > 45) {
+        error.nickname = '昵称不能太长';
+      }
     }
     if (this.dirty.password && this.password.length === 0) {
       error.password = '请输入您当前的密码，确认您的身份';
+    }
+    if (this.newPassword.length > 45) {
+      error.newPassword = '密码不能太长';
     }
     if (this.dirty.confirmingPassword && this.confirmingPassword !== this.newPassword) {
       error.confirmingPassword = '确认密码与新密码不一致';
@@ -155,12 +168,22 @@ export default class extends Vue {
     this.avatarFile = null;
   }
 
+  /**
+   * @param {string} prop
+   */
   toggleVisibility(prop) {
     this[prop] = !this[prop];
   }
 
+  /**
+   * @param {File} file
+   */
   changeAvatarFile(file) {
     if (file) {
+      if (!file.type.startsWith('image/')) {
+        SnakeBar.error('头像应该是图片文件');
+        return;
+      }
       this.avatarFile = file;
     }
   }
