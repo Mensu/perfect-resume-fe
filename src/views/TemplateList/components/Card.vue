@@ -28,7 +28,7 @@
 <script>
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { guardLogin } from '../../../services/guard';
-import { axiosDefaults } from '../../../services/api';
+import { downloadLink } from '../../../services/pipes';
 
 @Component({
   name: 'card',
@@ -54,7 +54,7 @@ export default class extends Vue {
    * @param {Template} template
    */
   download(template) {
-    window.open(`${axiosDefaults.baseURL}/resume/${template.downloadPath}`, '_blank');
+    window.open(downloadLink(template), '_blank');
   }
 }
 </script>

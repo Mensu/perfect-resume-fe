@@ -1,6 +1,6 @@
 <template>
   <mu-dialog v-if="tmpl" :open="!!tmpl" dialog-class="min-w-400"
-              :title="'给《' + tmpl.name + '》评分'" @close="close()">
+              :title="'给《' + stripFilename(tmpl.name) + '》评分'" @close="close()">
     <rating-bar v-model="myRating" :max="5"/>
     <mu-button flat slot="actions" @click="close()">
       取消
@@ -17,6 +17,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { template as tmplstore } from '../../../store/modules/template';
 import { FETCH_TEMPLATE_LIST, RATE_TEMPLATE } from '../../../store/modules/template/actions';
+import { stripFilename } from '../../../services/pipes';
 import { SnakeBar } from '../../../services/snakebar';
 
 const TmplModule = namespace(tmplstore.name);
@@ -33,6 +34,7 @@ export default class extends Vue {
 
   myRating = 0;
   isRating = false;
+  stripFilename = stripFilename;
 
   @Watch('tmpl')
   tmplChange(tmpl) {
