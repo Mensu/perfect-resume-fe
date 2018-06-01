@@ -21,6 +21,7 @@ import { Component, Vue, Provide, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 import Topbar from './components/Topbar';
 import LoginRegister from './components/LoginRegister';
+import { checkLogin } from './services/guard';
 
 @Component({
   name: 'app',
@@ -31,6 +32,7 @@ import LoginRegister from './components/LoginRegister';
   created() {
     // 使得 $router reactive
     this.router = this.$router;
+    checkLogin();
   },
 })
 export default class extends Vue {

@@ -1,7 +1,20 @@
 import { store } from '../store';
-import { OPEN_LOGIN_FORM } from '../store/actions';
+import { OPEN_LOGIN_FORM, CHECK_LOGIN } from '../store/actions';
 import { user as userstore } from '../store/modules/user';
 import { SnakeBar } from './snakebar';
+import TaskQueue from './TaskQueue';
+
+
+const checkLoginQueue = new TaskQueue(1, null);
+let checked = false;
+export async function checkLogin() {
+  if (checked) return store.state.isLoggedIn;
+  return checkLoginQueue.add(async () => {
+    const isLoggedIn = await store.dispatch(CHECK_LOGIN);
+    checked = true;
+    return isLoggedIn;
+  });
+}
 
 /**
  * @param {boolean} [waitForLogin] 默认为 true
@@ -21,6 +34,9 @@ export function guardAdmin() {
 
 export async function beforeEnterGuardLogin(to, from, next) {
   const isFirstPage = from.matched.length === 0;
+  if (isFirstPage) {
+    await checkLogin();
+  }
   if (await guardLogin(isFirstPage)) {
     return next(false);
   }
