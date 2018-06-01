@@ -14,16 +14,16 @@ export const actions = {
   async [RATE_TEMPLATE]({ commit }, { templateId, myRating }) {
     commit(RATE_TEMPLATE, { templateId, myRating });
   },
-  async [UPLOAD]({ commit, state, rootGetters }, { file, name }) {
+  async [UPLOAD]({ commit, state, dispatch, rootGetters }, { file, name }) {
     await template_api.uploadTemplate(file, name);
-    // dispatch(FETCH_TEMPLATE_LIST);
+    dispatch(FETCH_TEMPLATE_LIST);
     const templateId = state.rawList.reduce((acc, cur) => Math.max(cur.templateId, acc), 0) + 1;
     const { nickname } = rootGetters;
-    commit(ADD_TEMPLATE, refactorTmpl({ templateId, name, nickname, downloadPath: `${name}.doc` }));
+    commit(ADD_TEMPLATE, refactorTmpl({ templateId, name, nickname, downloadPath: `${templateId}.doc` }));
   },
-  async [DELETE]({ commit, state }, templateId) {
+  async [DELETE]({ commit, state, dispatch }, templateId) {
     await template_api.deleteTemplate(templateId);
-    // dispatch(FETCH_TEMPLATE_LIST);
+    dispatch(FETCH_TEMPLATE_LIST);
     commit(DELETE_TEMPLATE, templateId);
   },
 };
