@@ -2,7 +2,7 @@
   <mu-dialog v-if="open" :open="open" :overlay-close="false" :esc-press-close="false"
               :title="'上传我的简历模板'" @close="close()">
     <div>
-      <input type="file" hidden ref="fileInputEl"
+      <input type="file" hidden ref="fileInputEl" :accept="acceptFileType.join(';')"
               @change="changeFile($event.target.files.item(0))"/>
       <mu-button class="mr-20" color="primary" @click="$refs.fileInputEl.click()">
         <mu-icon left value="add"/>
@@ -13,7 +13,7 @@
     <div>
       <mu-alert v-if="file" color="info">
         <mu-icon value="check_circle"/>
-        已选择文件 {{ file.name }}，文件大小 {{ file.size | fileSize }}
+        已选择文件 {{ file.name | stripFilename }}，文件大小 {{ file.size | fileSize }}
       </mu-alert>
     </div>
     <mu-button flat slot="actions" @click="close()">
@@ -50,13 +50,24 @@ export default class extends Vue {
   file = null;
 
   isUploading = false;
+  acceptFileType = [
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/msword',
+  ];
 
   get isFormValid() {
     return this.name.length > 0 && this.file;
   }
 
+  /**
+   * @param {File} file
+   */
   changeFile(file) {
     if (file) {
+      if (!this.acceptFileType.includes(file.type)) {
+        SnakeBar.error('请上传 .doc 或 .docx 文件');
+        return;
+      }
       this.file = file;
     }
   }
@@ -72,8 +83,9 @@ export default class extends Vue {
       return;
     }
     this.isUploading = true;
+    const { file, name } = this;
     try {
-      await this.upload(this.file, this.name);
+      await this.upload({ file, name });
       SnakeBar.success('成功上传');
       this.close();
     } finally {
