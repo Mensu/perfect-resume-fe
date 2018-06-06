@@ -8,8 +8,8 @@ import TaskQueue from './TaskQueue';
 const checkLoginQueue = new TaskQueue(1, null);
 let checked = false;
 export async function checkLogin() {
-  if (checked) return store.state.isLoggedIn;
   return checkLoginQueue.add(async () => {
+    if (checked) return store.state.isLoggedIn;
     const isLoggedIn = await store.dispatch(CHECK_LOGIN);
     checked = true;
     return isLoggedIn;
